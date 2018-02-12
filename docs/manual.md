@@ -1,6 +1,6 @@
 States Template
 ================
-All states must comply with this template.
+All states must comply with this template.  
 
 ```lua
 function mystate()
@@ -21,6 +21,12 @@ To change states, simply do:
 
 ```lua
 curstate=some_state()
+```
+## SFF command
+You can generate states by issuing the following command:
+
+```bash
+$: sff -g new_state --name new_state
 ```
 
 ----
@@ -45,6 +51,14 @@ end
 ```
 
 **Entities are drawables. This means that you MUST call draw() on every frame for each entity.**
+
+## SFF command
+You can generate states by issuing the following command:
+
+```bash
+$: sff -g entity --name new_entity
+```
+
 
 ## Animations
 All entities have an animation object which can have multiple animations.  
