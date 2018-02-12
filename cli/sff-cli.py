@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import os, sys
 import argparse
 
@@ -6,7 +7,7 @@ TEMP_FILENAME  = "tmp.sff"
 
 parser = argparse.ArgumentParser(description='Command line utility for the SuperFastFramework.')
 parser.add_argument('-p', '--path', help='Path of the SFF project. Defaults to \'.\' ')
-parser.add_argument('-g', '--generate', choices=['state','entity', 'gamepad'], help='Generates boilerplate code.')
+parser.add_argument('-g', '--generate', choices=['state','entity','gamepad','shake'], help='Generates boilerplate code.')
 parser.add_argument('-n', '--name', help='Name of the file to be generated. Use this with --generate flag')
 parser.add_argument('-c', '--compile' , metavar='OUTPUT', help='Takes main.lua and all the files it references and generates a .p8 file.')
 
@@ -29,8 +30,8 @@ def compile(path, name):
 
     print("Compiling... ")
     # Generates a tmp.sff with all the code
-    with open(path+os.sep+TEMP_FILENAME, 'w') as out_file: # Opens the temp file for writing
-        with open(path+'/main.lua', encoding='utf8') as in_file:         # Opens the main SFF lua file
+    with open(path+os.sep+TEMP_FILENAME, 'w') as out_file:          # Opens the temp file for writing
+        with open(path+'/main.lua', encoding='utf8') as in_file:    # Opens the main SFF lua file
             line = in_file.readline()
             print("Importing code... ")
             while line:
@@ -166,6 +167,26 @@ end
 """
     print(template)
 
+
+def generate_screen_shake():
+    print("Printing screen-shake boilerplate to stdout...")
+    print("")
+
+    template="""-- setup shake to a value > 0 and call this func on every update
+function cam_shake()
+    if (shake>0) then
+        if (shake>0.1) then
+            shake*=0.9
+        else
+            shake=0
+        end
+        camera(rnd()*shake,rnd()*shake)
+    end
+end
+"""
+    print(template)
+
+
 def check_name_arg(args):
     if not args.name:
         print("ERR - Name is mandatory: -n/--name NAME", file=sys.stderr)
@@ -173,6 +194,9 @@ def check_name_arg(args):
 
 
 if __name__ == '__main__':
+    if not len(sys.argv) > 1:
+        parser.print_help()
+
     if(args.generate and args.compile):
         print("ERR - You can't choose to generate a file and compile at the same time.\nRemove either the -c or -g flags.", file=sys.stderr)
         sys.exit(1)
@@ -197,4 +221,7 @@ if __name__ == '__main__':
 
         elif args.generate == "gamepad":
             generate_gamepad()
+
+        elif args.generate == "shake":
+            generate_screen_shake()
 
