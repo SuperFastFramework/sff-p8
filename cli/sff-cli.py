@@ -31,7 +31,7 @@ def compile(path, name):
 
     print("Compiling... ")
     # Generates a tmp.sff with all the code
-    with open(path+os.sep+TEMP_FILENAME, 'w') as out_file:          # Opens the temp file for writing
+    with open(path+os.sep+TEMP_FILENAME, 'wb') as out_file:          # Opens the temp file for writing
         with open(path+'/main.lua', encoding='utf8') as in_file:    # Opens the main SFF lua file
             line = in_file.readline()
             print("Importing code... ")
@@ -49,18 +49,18 @@ def compile(path, name):
                                 else:
                                     try:
                                         idx = line.index("--")
-                                        out_file.write(line[:idx]+"\n")
+                                        out_file.write((line[:idx]+"\n").encode("utf-8"))
                                     except ValueError:
-                                        out_file.write(line)
+                                        out_file.write(line.encode("utf-8"))
 
-                        out_file.write("\n") # Avoid pico8 file generation errors
+                        out_file.write("\n".encode("utf-8")) # Avoid pico8 file generation errors
                     except FileNotFoundError:
                         print("ERR - Specified path ('"+path+os.sep+filename_to_inject+"') doesn't exists.", file=sys.stderr)
                         sys.exit(1)
 
                 # Copy line directly into out_file
                 else:
-                    out_file.write(line)
+                    out_file.write(line.encode("utf-8"))
 
                 line = in_file.readline()
             
