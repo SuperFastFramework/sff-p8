@@ -9,6 +9,7 @@ __lua__
 --  --<*sff/collision.lua
 --  --<*sff/explosions.lua
 
+--<*visual.lua
 --<*menu_state.lua
 --<*game_state.lua
 --<*gameover_state.lua
