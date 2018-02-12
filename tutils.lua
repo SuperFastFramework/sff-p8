@@ -73,10 +73,6 @@ function tutils(args)
 
 		print(self.text, self._x, self._y, self._fg)
     end
-    
-    function s:set_text(text)
-        self.text=text
-    end
 
 	return s
 end

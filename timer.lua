@@ -16,7 +16,7 @@ function timer(timers, step, ticks, max_runs, func)
         if(self.tick >= self.trigger_tick)then
             self.func()
             self.count+=1
-            if(self.max>0 and self.count>=self.max)then
+            if(self.max>0 and self.count>=self.max and self.timers ~= nil)then
                 del(self.timers,self) -- removes this timer from the table
             else
                 self.tick=0

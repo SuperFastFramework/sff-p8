@@ -129,9 +129,12 @@ function entity(anim_obj)
         self:setpos(self.x, self.y)
     end
     function e:flicker(duration)
-        self.flickerer.duration=duration
-        self.flickerer.is_flickering=true
-        self.flickerer:flicker()
+        if(not self.flickerer.is_flickering)then
+            self.flickerer.duration=duration
+            self.flickerer.is_flickering=true
+            self.flickerer:flicker()
+        end
+        return self.flickerer.is_flickering
     end
 
     -- this must be called in the _draw() function
