@@ -1,7 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 15
 __lua__
--- a game by rombosaur studios
+-- made with super-fast-framework
 
 --<*sff/entity.lua
 --<*sff/timer.lua
