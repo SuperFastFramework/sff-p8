@@ -132,6 +132,13 @@ my_entity:flicker(duration_in_ticks)
 
 ----
 
+Text Utils
+=================
+TODO
+
+
+----
+
 Timers
 ======
 
