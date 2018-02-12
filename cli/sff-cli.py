@@ -43,7 +43,15 @@ def compile(path, name):
                         # Copy the refered file into the out_file
                         with open(filename_to_inject, encoding='utf8') as file_to_inject:
                             for line in file_to_inject:
-                                out_file.write(line)
+                                if line.lstrip().startswith("--") or not line.strip(' \t\n\r'):
+                                    continue
+                                else:
+                                    try:
+                                        idx = line.index("--")
+                                        out_file.write(line[:idx]+"\n")
+                                    except ValueError:
+                                        out_file.write(line)
+
                         out_file.write("\n") # Avoid pico8 file generation errors
                     except FileNotFoundError:
                         print("ERR - Specified path ('"+path+os.sep+filename_to_inject+"') doesn't exists.", file=sys.stderr)

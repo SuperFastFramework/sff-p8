@@ -14,7 +14,6 @@ __lua__
 --<*gameover_state.lua
 --<*win_state.lua
 
--- states management
 function _init()
     curstate=menu_state()
     tick=0 -- all purpose tick counter
