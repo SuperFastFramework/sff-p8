@@ -10,6 +10,7 @@ parser.add_argument('-p', '--path', help='Path of the SFF project. Defaults to \
 parser.add_argument('-g', '--generate', choices=['state','entity','gamepad','shake'], help='Generates boilerplate code.')
 parser.add_argument('-n', '--name', help='Name of the file to be generated. Use this with --generate flag')
 parser.add_argument('-c', '--compile' , metavar='OUTPUT', help='Takes main.lua and all the files it references and generates a .p8 file.')
+parser.add_argument('--version', action='version', version='%(prog)s 1.0 - Feb 2018')
 
 args = parser.parse_args()
 
