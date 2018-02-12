@@ -3,11 +3,11 @@ version 15
 __lua__
 -- a game by rombosaur studios
 
---<*entity.lua
---<*timer.lua
---<*tutils.lua
---  --<*collision.lua
---  --<*explosions.lua
+--<*sff/entity.lua
+--<*sff/timer.lua
+--<*sff/tutils.lua
+--  --<*sff/collision.lua
+--  --<*sff/explosions.lua
 
 --<*menu_state.lua
 --<*game_state.lua
