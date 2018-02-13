@@ -11,7 +11,7 @@ function game_state()
 
     s.draw=function()
         for d in all(drawables) do
-            d:update()
+            d:draw()
         end
     end
 

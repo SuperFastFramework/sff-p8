@@ -23,6 +23,7 @@ function win_state()
         if(btnp(5)) curstate=menu_state() -- "X"
     end
 
+    cls()
     s.draw=function()
         -- bkg
         dance_bkg(10,frbkg)

@@ -28,11 +28,10 @@ function menu_state()
 	local frfg=6
 		
 	state.update=function()
-        -- if(btnp(5)) curstate=game_state() -- "X"
-        -- if(btnp(5)) curstate=gameover_state() -- "X"
-        if(btnp(5)) curstate=win_state() -- "X"
+        if(btnp(5)) curstate=game_state() -- "X"
 	end
 	
+	cls()
 	state.draw=function()
 		-- bkg
 		dance_bkg(10,frbkg)
