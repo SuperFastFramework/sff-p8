@@ -239,3 +239,33 @@ The signature of the function is as follows:
 function timer( timers_global_table,         tick_increase_per_frame, 
                 trigger_func_at_tick_number, number_of_times_to_run, func_to_execute)
 ```
+
+----
+CLI App
+=======
+
+## Importing Files
+
+To import a file you have to add a line with the following prefix __--<*__ and following the name of the file to import. Here's an example:  
+
+```
+--<*my_file.lua
+```
+
+## Compile
+
+To compile all your files into a functioning _.p8_ file, issue the following command:  
+```bash
+sff -c game_name
+```  
+It will generate a _game\_name.p8_ file that you can load on Pico-8.  
+Only the code is overwritten, all the assets are kept exactly as saved within Pico-8.
+
+## Snippets
+
+Currently _SFF_ provides snippets for controller input and screen shake:
+
+```bash
+sff -g gamepad  # generates the input buttons snippet
+sff -g shake    # generates screen shake snippet
+```
