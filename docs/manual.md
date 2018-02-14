@@ -1,9 +1,30 @@
+<div align="center">
+    <h1>Super Fast Framework</h1>
+    <i>For Pico-8, by Rombosaur Studios</i>
+</div>  
+<br><br><br>
+
+__SFF__ is a collection of lua objects, functions and a CLI app that allows for rapid development of games using Pico-8.
+It allows for and provides the following features:  
+- Divide your code into multiple .lua files.
+- Divide your game into "States".
+- Entities with animations, bounding boxes and flickering.
+- Text object with support for centering, bold, shadow and blinking.
+- Timers for schedulling and repeating code.
+- A CLI app that generates boilerplate code and snippets.
+
 States Template
 ================
-All states must comply with this template.  
+To generate a states you need to issue the following command:
+
+```bash
+sff -g new_state --name new_state
+```
+
+It will generate a file named "new_state.lua" with the following code inside:  
 
 ```lua
-function mystate()
+function new_state()
     local s={}
 
     s.update=function()
@@ -17,28 +38,35 @@ function mystate()
     return s
 end
 ```
-To change states, simply do:
+
+To use the state you need to import the file into your main.lua. See _Importing Files_ on how to do that.
+
+Put all your _\_update()_ code inside the _s.update_ function and all your _\_draw()_ code inside the _s.draw_ function.
+
+To change states, simply use the global _curstate_ variable:
 
 ```lua
-curstate=some_state()
+curstate=new_state()
 ```
-## SFF command
-You can generate states by issuing the following command:
 
-```bash
-$: sff -g new_state --name new_state
-```
 
 ----
 
 Entities Template
 =================
 
-Abstract the creation of entities on their own function.  
-The following template has the minimum code required to create an entity:
+You can generate entities by issuing the following command:
+
+```bash
+sff -g entity --name new_entity
+```
+
+The code will be outputed to the terminal and it will have an animation and bounding box objects.
+
+I'll proceed descibing the Entity object firts with only an animation object attached:  
 
 ```lua
-function my_entity(x,y)
+function new_entity(x,y)
     local anim_obj=anim() -- creates animation object
     anim:add(1,2,0.5,1,1) -- adds one animation to the animation object
 
@@ -49,16 +77,9 @@ function my_entity(x,y)
     return e
 end
 ```
-
-**Entities are drawables. This means that you MUST call draw() on every frame for each entity.**
-
-## SFF command
-You can generate states by issuing the following command:
-
-```bash
-$: sff -g entity --name new_entity
-```
-
+**NOTE!!!**
+- Entities are drawables. This means that you MUST call draw() on every frame for each entity.
+- When changing x,y values you MUST do it by using the setx(x), sety(y) or setpos(x,y) methods, otherwise the bounding box positions will not update.
 
 ## Animations
 All entities have an animation object which can have multiple animations.  
@@ -72,7 +93,8 @@ anim:add(first_frame_idx, total_frames, speed, zoom_width, zoom_height)
 - **speed**: speed of frame changing
 - **zoom\_width & zoom\_height**: 1=8px, 2=16px, 3=26px, 4=32px
 
-**NOTE:** all frames of an animation must be consecutive in the x axis.
+**NOTE!!!** 
+- This version of **SFF** requires animations to have all frames consecutive in the x axis of the sprite sheet.
 
 To change the active animation simply call the __set\_anim(n)__ method with the index of the animation on the added animations list.
 
@@ -131,11 +153,58 @@ my_entity:flicker(duration_in_ticks)
 ```
 
 ----
+Collision Detection
+===================
+
+A simlpe collision detection function is provided in __sff/collision.lua__ file.  
+It operates with Entity objects, here's it's use:  
+
+```lua
+    collition = collides(ent1, ent2)
+```
+
+Returns true if the entities collide, flase otherwise.
+
+
+----
 
 Text Utils
-=================
-TODO
+==========
+Text utils is a function that returns a configured object that will "draw" the specified text.  
+It supports bordered text, center on x and/or y axis, blink with configurable on and off times and also the hability to add a shadow. All colors (foreground, background and shadow) are confiugurable.  
 
+**tutils** function accepts only one argument that it's an object with the following structure:
+```lua
+{
+   text="", 
+   x=1, 
+   y=1, 
+   fg=1, 
+   bg=1, 
+   sh=1,
+   bordered=false, 
+   shadowed=false, 
+   centerx=false, 
+   centery=false,
+   blink=false, 
+   on_time=5, 
+   off_time=5
+}
+```
+
+**text** property is mandatory, the rest have default values as described above.  
+**on_time** allows to configure the "showing" time, **off_time** configures the "hidden" time.
+
+Example:
+```lua
+function _init()
+    game_name=tutils({text="super game", bordered=true, fg=5, bg=6})
+end
+
+function _draw()
+    game_name:draw()
+end
+```
 
 ----
 
