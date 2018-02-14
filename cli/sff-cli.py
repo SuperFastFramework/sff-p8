@@ -1,4 +1,22 @@
 #!/usr/bin/python3
+'''
+    This file is part of SFF.
+
+    SFF is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SFF is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SFF.  If not, see <http://www.gnu.org/licenses/>.
+
+    Written by Iber Parodi Siri 2018
+'''
 import os, sys
 import argparse
 
@@ -32,7 +50,7 @@ def compile(path, name):
     print("Compiling... ")
     # Generates a tmp.sff with all the code
     with open(path+os.sep+TEMP_FILENAME, 'wb') as out_file:          # Opens the temp file for writing
-        with open(path+'/main.lua', encoding='utf8') as in_file:    # Opens the main SFF lua file
+        with open(path+os.sep+'main.lua', encoding='utf8') as in_file:    # Opens the main SFF lua file
             line = in_file.readline()
             print("Importing code... ")
             while line:
@@ -84,7 +102,7 @@ def compile(path, name):
             print("No previous .p8 file. No assets imported")
 
     # moves the tmp.sff to the <name>.p8
-    os.rename(path+"/"+TEMP_FILENAME, path+"/"+out_p8)
+    os.rename(path+os.sep+TEMP_FILENAME, path+os.sep+out_p8)
     print("Done!")
 
 def generate_state(path, name):
