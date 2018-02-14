@@ -11,6 +11,6 @@ It allows for and provides the following features:
 
 Check the [manual](https://github.com/Rombusevil/sff/blob/master/docs/manual.md)  for information on how to use.  
 More documentation will be added if people start using it.  
-TO run the _CLI_ you need to have Python3.  
+To run the _CLI App_ you need to have Python3.  
 
 If you like it please consider supporting me by clicking the following button   <a href='https://ko-fi.com/H2H88K98' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
