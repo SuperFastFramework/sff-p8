@@ -17,19 +17,19 @@
 
     Written by Iber Parodi Siri 2018
 '''
-import os, sys
+import os, sys, shutil
 import argparse
 import tempfile, subprocess
 
 INJECT_KEYWORD = "--<*"
 TEMP_FILENAME  = "tmp.sff"
 
-parser = argparse.ArgumentParser(description='Command line utility for the SuperFastFramework.')
+parser = argparse.ArgumentParser(description='Command line utility for the SuperFastFramework - ROMBOSAUR STUDIOS BRANCH.')
 parser.add_argument('-p', '--path', help='Path of the SFF project. Defaults to \'.\' ')
 parser.add_argument('-g', '--generate', choices=['project','state','entity','gamepad','shake'], help='Generates boilerplate code.')
 parser.add_argument('-n', '--name', help='Name of the file to be generated. Use this with --generate flag')
 parser.add_argument('-c', '--compile' , metavar='OUTPUT', help='Takes main.lua and all the files it references and generates a .p8 file.')
-parser.add_argument('--version', action='version', version='%(prog)s 1.0 - Feb 2018')
+parser.add_argument('--version', action='version', version='%(prog)s 1.0 - Feb 2018 - ROMBOSAUR STUDIOS BRANCH')
 
 args = parser.parse_args()
 
@@ -231,11 +231,10 @@ def generate_new_project(path, name):
 
     tmp_dir=os.path.join(tempfile.gettempdir(), "sff")
     if os.path.isdir(tmp_dir):
-        process = subprocess.Popen(["git", "reset", "--hard"], cwd=tmp_dir, stdout=subprocess.PIPE)
-        process.communicate()
-    else:
-        process = subprocess.Popen(["git", "clone", "https://github.com/Rombusevil/sff.git", tmp_dir])
-        process.communicate()
+        shutil.rmtree(tmp_dir)
+
+    process = subprocess.Popen(["git", "clone", "-b", "rombosaur", "https://github.com/Rombusevil/sff.git", tmp_dir])
+    process.communicate()
 
     # Copy states
     for file in os.listdir(tmp_dir):
