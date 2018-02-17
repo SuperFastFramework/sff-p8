@@ -221,13 +221,21 @@ def check_name_arg(args):
         sys.exit(1)
 
 def generate_new_project(path, name):
-    tmp_dir=os.path.join(tempfile.gettempdir(), "sff")
-    process = subprocess.Popen(["git", "clone", "https://github.com/Rombusevil/sff.git", tmp_dir], stdout=subprocess.PIPE)
-    output = process.communicate()[0]
-
+    # check if proj_name exists
     proj_name=path+os.sep+name
-    if not os.path.exists(proj_name):
+    if os.path.isdir(proj_name):
+        print("Project "+proj_name+"already exists! Aborting...")
+        sys.exit(1)
+    else:
         os.makedirs(proj_name)
+
+    tmp_dir=os.path.join(tempfile.gettempdir(), "sff")
+    if os.path.isdir(tmp_dir):
+        process = subprocess.Popen(["git", "reset", "--hard"], cwd=tmp_dir, stdout=subprocess.PIPE)
+        process.communicate()
+    else:
+        process = subprocess.Popen(["git", "clone", "https://github.com/Rombusevil/sff.git", tmp_dir])
+        process.communicate()
 
     # Copy states
     for file in os.listdir(tmp_dir):
@@ -238,9 +246,6 @@ def generate_new_project(path, name):
     os.rename(os.path.join(tmp_dir,"sff"), os.path.join(proj_name, "sff") )
 
     print("New project generated at "+proj_name)
-
-    process = subprocess.Popen(["git", "reset", "--hard"], cwd=tpm_dir, stdout=subprocess.PIPE)
-    output = process.communicate()[0]
 
 
 if __name__ == '__main__':
