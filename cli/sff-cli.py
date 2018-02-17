@@ -19,13 +19,14 @@
 '''
 import os, sys
 import argparse
+import tempfile, subprocess
 
 INJECT_KEYWORD = "--<*"
 TEMP_FILENAME  = "tmp.sff"
 
 parser = argparse.ArgumentParser(description='Command line utility for the SuperFastFramework.')
 parser.add_argument('-p', '--path', help='Path of the SFF project. Defaults to \'.\' ')
-parser.add_argument('-g', '--generate', choices=['state','entity','gamepad','shake'], help='Generates boilerplate code.')
+parser.add_argument('-g', '--generate', choices=['project','state','entity','gamepad','shake'], help='Generates boilerplate code.')
 parser.add_argument('-n', '--name', help='Name of the file to be generated. Use this with --generate flag')
 parser.add_argument('-c', '--compile' , metavar='OUTPUT', help='Takes main.lua and all the files it references and generates a .p8 file.')
 parser.add_argument('--version', action='version', version='%(prog)s 1.0 - Feb 2018')
@@ -146,7 +147,7 @@ end"""
     print("Done!")
     print("Don't forget to add --<*"+name+" to the main.lua file.")
 
-def generate_entity(path, name):
+def generate_entity(name):
     print("Printing entity boilerplate to stdout...")
     print("")
 
@@ -219,6 +220,33 @@ def check_name_arg(args):
         print("ERR - Name is mandatory: -n/--name NAME", file=sys.stderr)
         sys.exit(1)
 
+def generate_new_project(path, name):
+    # check if proj_name exists
+    proj_name=path+os.sep+name
+    if os.path.isdir(proj_name):
+        print("Project "+proj_name+"already exists! Aborting...")
+        sys.exit(1)
+    else:
+        os.makedirs(proj_name)
+
+    tmp_dir=os.path.join(tempfile.gettempdir(), "sff")
+    if os.path.isdir(tmp_dir):
+        process = subprocess.Popen(["git", "reset", "--hard"], cwd=tmp_dir, stdout=subprocess.PIPE)
+        process.communicate()
+    else:
+        process = subprocess.Popen(["git", "clone", "https://github.com/Rombusevil/sff.git", tmp_dir])
+        process.communicate()
+
+    # Copy states
+    for file in os.listdir(tmp_dir):
+        if file.endswith(".lua"):
+            os.rename(os.path.join(tmp_dir, file), os.path.join(proj_name, file))
+    
+    # Copy libs
+    os.rename(os.path.join(tmp_dir,"sff"), os.path.join(proj_name, "sff") )
+
+    print("New project generated at "+proj_name)
+
 
 if __name__ == '__main__':
     if not len(sys.argv) > 1:
@@ -228,27 +256,30 @@ if __name__ == '__main__':
         print("ERR - You can't choose to generate a file and compile at the same time.\nRemove either the -c or -g flags.", file=sys.stderr)
         sys.exit(1)
 
-    path=args.path or '.'
-    
+    args.path=args.path or '.'
 
     if(args.compile):
         try:
-            compile(path, args.compile)
+            compile(args.path, args.compile)
         except FileNotFoundError:
-            print("ERR - Specified path ('"+path+"') doesn't exists.", file=sys.stderr)
+            print("ERR - Specified path ('"+args.path+"') doesn't exists.", file=sys.stderr)
 
     elif(args.generate):
         if args.generate == "state":
             check_name_arg(args)
-            generate_state(path, args.name)
+            generate_state(args.path, args.name)
 
         elif args.generate == "entity":
             check_name_arg(args)
-            generate_entity(path, args.name)
+            generate_entity(args.name)
 
         elif args.generate == "gamepad":
             generate_gamepad()
 
         elif args.generate == "shake":
             generate_screen_shake()
+
+        elif args.generate == "project":
+            check_name_arg(args)
+            generate_new_project(args.path, args.name)
 

@@ -1,6 +1,6 @@
 -- timers -----------------------------------------------
 -- implements updatable interface -----------------------
-function timer(timers, step, ticks, max_runs, func)
+function timer(updatables, step, ticks, max_runs, func)
     local t={}
     t.tick=0
     t.step=step
@@ -8,7 +8,7 @@ function timer(timers, step, ticks, max_runs, func)
     t.func=func
     t.count=0
     t.max=max_runs
-    t.timers=timers
+    t.timers=updatables
 
 -- public    
     function t:update()
@@ -28,7 +28,7 @@ function timer(timers, step, ticks, max_runs, func)
         del(self.timers, self)
     end
 
-    add(timers,t) -- adds this timer to the table
+    add(updatables,t) -- adds this timer to the table
     return t
 end
 -- end timers -------------------------------------------
