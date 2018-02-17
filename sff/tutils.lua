@@ -14,7 +14,7 @@ function tutils(args)
 	s.private.blink_speed=1
 	s.height=10 -- "line height" use this to calculate "next line" in a paragraph
 
-	s.text=args.text
+	s.text=args.text or ""
 	s._x=args.x or 2
 	s._y=args.y or 2
 	s._fg=args.fg or 7
