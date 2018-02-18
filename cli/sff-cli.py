@@ -94,7 +94,7 @@ def compile(path, name):
                         discard=False
 
                     if not discard:
-                        out_file.write(line)
+                        out_file.write(line.encode("utf8"))
 
                     line = in_file.readline()
         except FileNotFoundError:
