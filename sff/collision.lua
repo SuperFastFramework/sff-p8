@@ -12,3 +12,15 @@ function collides(ent1, ent2)
 
     return false
 end
+
+-- expects ent to be an entity object
+function point_collides(x,y, ent)
+    local eb=ent.bounds
+    
+    if  ((eb.xoff1 <= x and eb.xoff2 >= x)
+    and (eb.yoff1 <= y and eb.yoff2 >= y)) then 
+        return true
+    end
+
+    return false
+end
