@@ -33,7 +33,7 @@ function anim()
 	a.current=false
 	a.tick=0
 -- private
-    function a:_get_fr()
+    function a:_get_fr(one_shot, callback)
 		local anim=self.current
 		local aspeed=anim.speed
 		local fq=anim.fr_cant		
@@ -44,22 +44,34 @@ function anim()
 		
 		self.tick+=aspeed
 		local new_step=flr(flr(self.tick)*anim.w)		
-		if(st+new_step >= st+(fq*anim.w))then self.tick=0 end
+		if st+new_step >= st+(fq*anim.w) then 
+		    if one_shot then
+		        self.tick-=aspeed  
+		        callback()
+		    else
+		        self.tick=0
+		    end
+		end
 		
 		return sp
     end
     
 -- public
     function a:set_anim(idx)
-		self.current=self.list[idx]
+        if (self.currentidx == nil or idx != self.currentidx) self.tick=0 -- avoids sharing ticks between animations
+        self.current=self.list[idx]
+        self.currentidx=idx
     end
-	function a:add(first_fr, fr_cant, speed, zoomw, zoomh)
+
+	function a:add(first_fr, fr_cant, speed, zoomw, zoomh, one_shot, callback)
 		local a={}
 		a.first_fr=first_fr
 		a.fr_cant=fr_cant
 		a.speed=speed
 		a.w=zoomw
-		a.h=zoomh
+        a.h=zoomh
+        a.callback=callback or function()end
+        a.one_shot=one_shot or false
 		
 		add(self.list, a)
 	end
@@ -73,9 +85,9 @@ function anim()
 			return
 		end
 		
-		spr(self:_get_fr(),x,y,anim.w,anim.h,flipx,flipy)
-	end
-	
+		spr(self:_get_fr(self.current.one_shot, self.current.callback),x,y,anim.w,anim.h,flipx,flipy)
+    end
+    	
 	return a
 end
 
