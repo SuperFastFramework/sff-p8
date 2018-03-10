@@ -13,6 +13,54 @@ It allows for and provides the following features:
 - Timers for schedulling and repeating code.
 - A CLI app that generates boilerplate code and snippets.
 
+Install
+=======
+
+## Windows / Mac
+You should add the file ```cli/sff-cli.py``` to the systems path preferably by the name __"sff"__.
+
+## Linux
+Simply execute the file ```cli/installer.sh``` and the CLI will be installed on the system path by the name __"sff"__.
+
+Create Project
+==============
+
+To create a new SFF project, move into the desired directory and execute the following command:
+
+```bash
+sff -g project -n my_new_proj
+```
+where 'my_new_proj' is the name of the project to generate.
+
+# Importing Files
+
+To import a file you have to add a line with the following prefix __--<*__ and following the name of the file to import. Here's an example:  
+
+```
+--<*my_file.lua
+```
+This only works on the ```main.lua``` file at the moment.
+
+# Compile
+
+To compile all your files into a functioning _.p8_ file, issue the following command:  
+```bash
+sff -c game_name
+```  
+It will generate a _game\_name.p8_ file that you can load on Pico-8.  
+Only the code is overwritten, all the assets are kept exactly as saved within Pico-8.
+
+# Snippets
+
+Currently _SFF_ provides snippets for controller input and screen shake:
+
+```bash
+sff -g gamepad  # generates the input buttons snippet
+sff -g shake    # generates screen shake snippet
+```
+
+----
+
 States Template
 ================
 To generate a states you need to issue the following command:
@@ -238,34 +286,4 @@ The signature of the function is as follows:
 ```lua
 function timer( timers_global_table,         tick_increase_per_frame, 
                 trigger_func_at_tick_number, number_of_times_to_run, func_to_execute)
-```
-
-----
-CLI App
-=======
-
-## Importing Files
-
-To import a file you have to add a line with the following prefix __--<*__ and following the name of the file to import. Here's an example:  
-
-```
---<*my_file.lua
-```
-
-## Compile
-
-To compile all your files into a functioning _.p8_ file, issue the following command:  
-```bash
-sff -c game_name
-```  
-It will generate a _game\_name.p8_ file that you can load on Pico-8.  
-Only the code is overwritten, all the assets are kept exactly as saved within Pico-8.
-
-## Snippets
-
-Currently _SFF_ provides snippets for controller input and screen shake:
-
-```bash
-sff -g gamepad  # generates the input buttons snippet
-sff -g shake    # generates screen shake snippet
 ```
