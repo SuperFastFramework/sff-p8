@@ -145,7 +145,7 @@ end"""
         out_file.write(template)
 
     print("Done!")
-    print("Don't forget to add --<*"+name+" to the main.lua file.")
+    print("Don't forget to add  --<*"+name+".lua  to the main.lua file.")
 
 def generate_entity(name):
     print("Printing entity boilerplate to stdout...")
@@ -162,6 +162,15 @@ def generate_entity(name):
     local bounds_obj=bbox(8,8)
     e:set_bounds(bounds_obj)
     -- e.debugbounds=true
+    
+    function e:update()
+    end
+    
+    -- overwrite entity's draw() function
+    -- e._draw=e.draw
+    -- function e:draw()
+    --     self:_draw()
+    -- end
 
     return e
 end
