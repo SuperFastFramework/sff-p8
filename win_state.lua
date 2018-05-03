@@ -2,6 +2,7 @@
 function win_state()
     local s={}
     local texts={}
+    local timeout=2 -- for avoiding the user hitting X while playing and by that dismissing this screen. In seconds
 
     -- graphical frame 
     local frbkg=11
@@ -17,10 +18,14 @@ function win_state()
     add(texts, tutils({text="                         ",centerx=true,y=ty,fg=8,bg=0,bordered=true,shadowed=true,sh=2})) ty+=10
     add(texts, tutils({text="                         ",centerx=true,y=ty,fg=8,bg=0,bordered=true,shadowed=true,sh=2})) ty+=20
     add(texts, tutils({text="                         ",centerx=true,y=ty,fg=8,bg=0,bordered=true,shadowed=true,sh=2})) ty+=10
-    add(texts, tutils({text="press ❎ to restart", blink=true, on_time=15, centerx=true,y=110,fg=0,bg=1,bordered=false,shadowed=true,sh=7}))
+
+    local restart_msg = "press ❎ to restart"
+    local msg = tutils({text="", blink=true, on_time=15, centerx=true,y=110,fg=0,bg=1,bordered=false,shadowed=true,sh=7})
+    add(texts, msg)
 
     s.update=function()
-        if(btnp(5)) curstate=menu_state() -- "X"
+        timeout -= 1/60
+        if(btnp(5) and timeout <= 0) curstate=game_state() -- "X"
     end
 
     cls()
@@ -43,7 +48,14 @@ function win_state()
         rectfill(frame_x0+2,frame_x0+1, frame_x1-2, frame_y1-2, frfg)
         rectfill(frame_x0+1,frame_x0+2, frame_x1-1, frame_y1-3, frfg)
                 
-        -- title
+        -- draw texts
+        if(timeout > 0)then
+            local t = flr(timeout) + 1
+            msg.text = "wait for it... ("..t..")"
+        else
+            msg.text = restart_msg
+        end
+
         for t in all(texts) do
             t:draw()
         end
