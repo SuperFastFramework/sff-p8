@@ -3,7 +3,7 @@ version 15
 __lua__
 -- made with super-fast-framework
 
-------------------------- Start Imports
+------------------------- start imports
 --<*sff/entity.lua
 --<*sff/timer.lua
 --<*sff/tutils.lua
@@ -15,10 +15,10 @@ __lua__
 --<*game_state.lua
 --<*gameover_state.lua
 --<*win_state.lua
---------------------------- End Imports
+--------------------------- end imports
 
--- To enable MOUSE support uncomment ALL of the following commented lines:
--- poke(0x5F2D, 1) -- enables mouse support
+-- to enable mouse support uncomment all of the following commented lines:
+-- poke(0x5f2d, 1) -- enables mouse support
 function _init()
     curstate=menu_state()
 end
