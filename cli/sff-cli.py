@@ -26,7 +26,7 @@ TEMP_FILENAME  = "tmp.sff"
 
 parser = argparse.ArgumentParser(description='Command line utility for the SuperFastFramework - ROMBOSAUR STUDIOS BRANCH.')
 parser.add_argument('-p', '--path', help='Path of the SFF project. Defaults to \'.\' ')
-parser.add_argument('-g', '--generate', choices=['project','state','entity','gamepad','shake'], help='Generates boilerplate code.')
+parser.add_argument('-g', '--generate', choices=['project','state','entity','gamepad', 'movement', 'shake'], help='Generates boilerplate code.')
 parser.add_argument('-n', '--name', help='Name of the file to be generated. Use this with --generate flag')
 parser.add_argument('-c', '--compile' , metavar='OUTPUT', help='Takes main.lua and all the files it references and generates a .p8 file.')
 parser.add_argument('--version', action='version', version='%(prog)s 1.0 - Feb 2018 - ROMBOSAUR STUDIOS BRANCH')
@@ -153,7 +153,7 @@ def generate_entity(name):
 
     template="function "+name+"""(x,y)
     local anim_obj=anim()
-    anim_obj:add(first_fr,fr_count,speed,zoomw,zoomh)
+    anim_obj:add(first_fr,fr_count,speed,tilesw,tilesh)
 
     local e=entity(anim_obj)
     e:setpos(x,y)
@@ -170,6 +170,7 @@ def generate_entity(name):
     -- e._draw=e.draw
     -- function e:draw()
     --     self:_draw()
+    --     ** your code here **
     -- end
 
     return e
@@ -200,6 +201,26 @@ end
 
 if(btnp(5))then -- "X"
 
+end
+"""
+    print(template)
+
+def generate_movement():
+    print("Printing movement boilerplate to stdout...")
+    print("")
+
+    template="""
+local vel=1
+if(btn(0))then 	   --left
+    self:setx(self.x-vel)
+elseif(btn(1))then --right
+    self:setx(self.x+vel)
+end
+
+if(btn(2))then 		--up
+    self:sety(self.y-vel)
+elseif(btn(3))then  --down
+    self:sety(self.y+vel)
 end
 """
     print(template)
@@ -283,6 +304,9 @@ if __name__ == '__main__':
 
         elif args.generate == "gamepad":
             generate_gamepad()
+
+        elif args.generate == "movement":
+            generate_movement()
 
         elif args.generate == "shake":
             generate_screen_shake()
