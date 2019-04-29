@@ -42,7 +42,7 @@ function anim()
 
 		a.tick+=aspeed
 		local new_step=flr(flr(a.tick)*anim.w)
-		if st+new_step >= st+(fq*anim.w) then 
+		if st+new_step >= st+(fq*anim.w) then
 		    if one_shot then
 		        a.tick-=aspeed
 		        callback()
@@ -85,7 +85,7 @@ function anim()
 		
 		spr(a:_get_fr(a.current.one_shot, a.current.callback),x,y,anim.w,anim.h,flipx,flipy)
     end
-    	
+
 	return a
 end
 
@@ -121,11 +121,11 @@ function entity(anim_obj)
 -- public:
     function e:setx(x)
         e.x=x
-        if(e.bounds != nil) e.bounds:setx(x)
+        if(e.bounds ~= nil) e.bounds:setx(x)
     end
     function e:sety(y)
         e.y=y
-        if(e.bounds != nil) e.bounds:sety(y)
+        if(e.bounds ~= nil) e.bounds:sety(y)
     end
     function e:setpos(x,y)
         e:setx(x)
