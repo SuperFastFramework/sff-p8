@@ -4,18 +4,18 @@ function circle_explo()
 	ex.circles={}
 	
 	function ex:explode(x,y)
-		add(self.circles,{x=x,y=y,t=0,s=2})
+		add(ex.circles,{x=x,y=y,t=0,s=2})
 	end
 	
 	function ex:multiexplode(x,y)
 		local time=0
-		add(self.circles,{x=x,y=y,t=time,s=rnd(2)+1 }) time-=2
-		add(self.circles,{x=x+7,y=y-3,t=time,s=rnd(2)+1}) time-=2
-		add(self.circles,{x=x-7,y=y+3,t=time,s=rnd(2)+1}) time-=2
-		add(self.circles,{x=x,y=y,t=time,s=rnd(2)+1}) time-=2
-		add(self.circles,{x=x+7,y=y+3,t=time,s=rnd(2)+1}) time-=2
-		add(self.circles,{x=x-7,y=y-3,t=time,s=rnd(2)+1}) time-=2
-		add(self.circles,{x=x,y=y,t=time,s=rnd(2)+1}) time-=2
+		add(ex.circles,{x=x,y=y,t=time,s=rnd(2)+1 }) time-=2
+		add(ex.circles,{x=x+7,y=y-3,t=time,s=rnd(2)+1}) time-=2
+		add(ex.circles,{x=x-7,y=y+3,t=time,s=rnd(2)+1}) time-=2
+		add(ex.circles,{x=x,y=y,t=time,s=rnd(2)+1}) time-=2
+		add(ex.circles,{x=x+7,y=y+3,t=time,s=rnd(2)+1}) time-=2
+		add(ex.circles,{x=x-7,y=y-3,t=time,s=rnd(2)+1}) time-=2
+		add(ex.circles,{x=x,y=y,t=time,s=rnd(2)+1}) time-=2
 	end
 	
 	-- call on _update() (clears & updates circles)

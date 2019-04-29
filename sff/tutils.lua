@@ -29,49 +29,45 @@ function tutils(args)
 	s._blink_off=args.off_time or 5
 	
 	function s:draw()
-		if self._centerx then self._x =  64-flr((#self.text*4)/2) end
-		if self._centery then self._y = 64-(4/2) end
+		if(s._centerx)s._x =  64-flr((#s.text*4)/2)
+		if(s._centery)s._y = 64-(4/2)
 
 		-- Blink related stuff
-		if self._blink then 
-			self.private.tick+=1
-			local offtime=self._blink_on+self._blink_off -- for internal use
-			if(self.private.tick>offtime) then self.private.tick=0 end
+		if s._blink then
+			s.private.tick+=1
+			local offtime=s._blink_on+s._blink_off -- for internal use
+			if(s.private.tick>offtime)s.private.tick=0
 			local blink_enabled_on = false
-			if(self.private.tick<self._blink_on)then
-				blink_enabled_on = true
-			end
+			if(s.private.tick<s._blink_on)blink_enabled_on = true
 			-- If it's supposed to blink, but it's on a off position, then return
-			if(not blink_enabled_on) then
-				return
-			end
+			if(not blink_enabled_on) return
 		end
 
 		local yoffset=1
-		if self._bordered then 
+		if s._bordered then
 			yoffset=2
 		end
 
-		if self._bordered then
-			local x=max(self._x,1)
-			local y=max(self._y,1)
+		if s._bordered then
+			local x=max(s._x,1)
+			local y=max(s._y,1)
 
-			if(self._shadowed)then
+			if(s._shadowed)then
 				for i=-1, 1 do	
-					print(self.text, x+i, self._y+2, self._sh)
+					print(s.text, x+i, s._y+2, s._sh)
 				end
 			end
 
 			for i=-1, 1 do
 				for j=-1, 1 do
-					print(self.text, x+i, y+j, self._bg)
+					print(s.text, x+i, y+j, s._bg)
 				end
 			end
-		elseif self._shadowed then
-			print(self.text, self._x, self._y+1, self._sh)
+		elseif s._shadowed then
+			print(s.text, s._x, s._y+1, s._sh)
 		end
 
-		print(self.text, self._x, self._y, self._fg)
+		print(s.text, s._x, s._y, s._fg)
     end
 
 	return s

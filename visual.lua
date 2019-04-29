@@ -7,10 +7,10 @@ function dance_bkg(delay,color)
     local sp=delay
     local pat=0b1110010110110101
     tick_dance+=1
-    if(tick_dance>=sp)then
+    if tick_dance>=sp then
         tick_dance=0
         step_dance+=1
-        if(step_dance>=16)then step_dance = 0 end
+        if(step_dance>=16) step_dance = 0
     end
     fillp(bxor(shl(pat,step_dance), shr(pat,16-step_dance)))
     rectfill(0,0,64,64,color)

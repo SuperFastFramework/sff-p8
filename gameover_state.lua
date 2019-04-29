@@ -49,7 +49,7 @@ function gameover_state()
         rectfill(frame_x0+1,frame_x0+2, frame_x1-1, frame_y1-3, frfg)
                 
         -- draw texts
-        if(timeout > 0)then
+        if timeout > 0 then
             local t = flr(timeout) + 1
             msg.text = "wait for it... ("..t..")"
         else

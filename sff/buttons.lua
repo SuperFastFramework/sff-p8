@@ -8,17 +8,17 @@ function raw_btn(x,y, w,h, fg,bg, callback)
     b.bounds=bbox(w,h)
     b.bounds:setx(x)
     b.bounds:sety(y)
-    b.debounce = true
+    b.debounce = 1
     function b:draw()
         local colfg=fg
         if point_collides(mousex, mousey, self) then
-            if(lclick)then
-                if(self.debounce)then
-                    self.debounce = false
+            if lclick then
+                if b.debounce then
+                    b.debounce = nil
                     callback()
                 end
             else
-                self.debounce = true
+                b.debounce = 1
             end
 
             colfg=bg

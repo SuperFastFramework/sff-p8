@@ -183,23 +183,23 @@ def generate_gamepad():
     print("")
 
     template="""
-if(btn(0))then 	   --left
+if btn(0) then 	   --left
 
-elseif(btn(1))then --right
-
-end
-
-if(btn(2))then 		--up
-
-elseif(btn(3))then  --down
+elseif btn(1) then --right
 
 end
 
-if(btnp(4))then -- "O"
+if btn(2) then 		--up
+
+elseif btn(3) then  --down
 
 end
 
-if(btnp(5))then -- "X"
+if btnp(4) then -- "O"
+
+end
+
+if btnp(5) then -- "X"
 
 end
 """
@@ -211,15 +211,15 @@ def generate_movement():
 
     template="""
 local vel=1
-if(btn(0))then 	   --left
+if btn(0) then 	   --left
     self:setx(self.x-vel)
-elseif(btn(1))then --right
+elseif btn(1) then --right
     self:setx(self.x+vel)
 end
 
-if(btn(2))then 		--up
+if btn(2) then 		--up
     self:sety(self.y-vel)
-elseif(btn(3))then  --down
+elseif btn(3) then  --down
     self:sety(self.y+vel)
 end
 """
@@ -232,8 +232,8 @@ def generate_screen_shake():
 
     template="""-- setup shake to a value > 0 and call this func on every update
 function cam_shake()
-    if (shake>0) then
-        if (shake>0.1) then
+    if shake>0 then
+        if shake>0.1 then
             shake*=0.9
         else
             shake=0
