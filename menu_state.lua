@@ -1,15 +1,13 @@
 -- state
 function menu_state()
-    local state={}
-    local texts={}
-    
+    local state,texts,ypos={},{},111
+
 	add(texts, tutils({text="game title",centerx=true,y=8,fg=8,bg=0,bordered=true,shadowed=true,sh=2}))
 	add(texts, tutils({text="rombosaur studios",centerx=true,y=99,fg=9,sh=2,shadowed=true}))
 	-- add(texts, tutils({text="shoot: 🅾️   move: ⬅️➡️⬆️⬇️",x=12,y=60, fg=0,bg=1,shadowed=true, sh=7}))
 	add(texts, tutils({text="press ❎ to start", blink=true, on_time=15, centerx=true,y=80,fg=0,bg=1,shadowed=true, sh=7}))
 	add(texts, tutils({text="v0.1", x=106, y=97}))
 
-	local ypos = 111
 	add(texts, tutils({text="🅾️             ❎  ", centerx=true, y=ypos, shadowed=true, bordered=true, fg=8, bg=0, sh=2}))
 	add(texts, tutils({text="  buttons  ", centerx=true, y=ypos, shadowed=true, fg=7, sh=0}))
     add(texts, tutils({text="  z         x  ", centerx=true, bordered=true, y=ypos+3, fg=8, bg=0}))
@@ -24,9 +22,8 @@ function menu_state()
     -- -----------------
     
 	-- graphical frame 
-	local frbkg=1
-	local frfg=6
-		
+	local frbkg,frfg=1,6
+
 	state.update=function()
         if(btnp(5)) curstate=game_state() -- "X"
 	end

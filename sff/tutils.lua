@@ -8,26 +8,28 @@
 -- }
 -- "text" is the only mandatory argument
 function tutils(args)
-	local s={}
-	s.private={}
-	s.private.tick=0
-	s.private.blink_speed=1
-	s.height=10 -- "line height" use this to calculate "next line" in a paragraph
+	local s={
+		private={
+			tick=0,
+			blink_speed=1
+		},
+		height=10, -- "line height" use this to calculate "next line" in a paragraph
 
-	s.text=args.text or ""
-	s._x=args.x or 2
-	s._y=args.y or 2
-	s._fg=args.fg or 7
-	s._bg=args.bg or 2
-	s._sh=args.sh or 3 	-- shadow color
-	s._bordered=args.bordered or false
-	s._shadowed=args.shadowed or false
-	s._centerx=args.centerx or false
-	s._centery=args.centery or false
-	s._blink=args.blink or false
-	s._blink_on=args.on_time or 5
-	s._blink_off=args.off_time or 5
-	
+		text=args.text or "",
+		_x=args.x or 2,
+		_y=args.y or 2,
+		_fg=args.fg or 7,
+		_bg=args.bg or 2,
+		_sh=args.sh or 3, 	-- shadow color
+		_bordered=args.bordered or false,
+		_shadowed=args.shadowed or false,
+		_centerx=args.centerx or false,
+		_centery=args.centery or false,
+		_blink=args.blink or false,
+		_blink_on=args.on_time or 5,
+		_blink_off=args.off_time or 5
+	}
+
 	function s:draw()
 		if(s._centerx)s._x =  64-flr((#s.text*4)/2)
 		if(s._centery)s._y = 64-(4/2)
@@ -49,8 +51,7 @@ function tutils(args)
 		end
 
 		if s._bordered then
-			local x=max(s._x,1)
-			local y=max(s._y,1)
+			local x,y=max(s._x,1),max(s._y,1)
 
 			if(s._shadowed)then
 				for i=-1, 1 do	

@@ -1,14 +1,15 @@
 -- timers -----------------------------------------------
 -- implements updatable interface -----------------------
 function timer(updatables, step, ticks, max_runs, func)
-    local t={}
-    t.tick=0
-    t.step=step
-    t.trigger_tick=ticks
-    t.func=func
-    t.count=0
-    t.max=max_runs
-    t.timers=updatables
+    local t={
+        tick=0,
+        step=step,
+        trigger_tick=ticks,
+        func=func,
+        count=0,
+        max=max_runs,
+        timers=updatables,
+    }
 
 -- public    
     function t:update()

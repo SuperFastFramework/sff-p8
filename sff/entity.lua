@@ -1,10 +1,11 @@
 -- entity -----------------------------------------------
 -- implements drawable interface
 function bbox(w,h,xoff1,yoff1,xoff2,yoff2)
-    local bb ={}
-    bb.offsets={ xoff1 or 0, yoff1 or 0, xoff2 or 0, yoff2 or 0}
-    bb.w=w
-    bb.h=h
+    local bb ={
+        offsets={ xoff1 or 0, yoff1 or 0, xoff2 or 0, yoff2 or 0},
+        w=w,
+        h=h,
+    }
     -- this values will be overwritten with setx(n) and sety(n)
     bb.xoff1= bb.offsets[1]
     bb.yoff1= bb.offsets[2]
@@ -28,20 +29,17 @@ function bbox(w,h,xoff1,yoff1,xoff2,yoff2)
 end
 
 function anim()
-    local a={}
-	a.list={}
-	a.current=false
-	a.tick=0
+    local a={
+        list={},
+        current=false,
+        tick=0,
+    }
 -- private
     function a:_get_fr(one_shot, callback)
 		local anim=a.current
-		local aspeed=anim.speed
-		local fq=anim.fr_cant		
-		local st=anim.first_fr
-		local step=flr(a.tick)*anim.w
+		local aspeed,fq,st,step, new_step = anim.speed, anim.fr_cant, anim.first_fr, flr(a.tick)*anim.w, flr(flr(a.tick)*anim.w)
 
 		a.tick+=aspeed
-		local new_step=flr(flr(a.tick)*anim.w)
 		if st+new_step >= st+(fq*anim.w) then
 		    if one_shot then
 		        a.tick-=aspeed
@@ -62,16 +60,17 @@ function anim()
     end
 
 	function a:add(first_fr, fr_cant, speed, zoomw, zoomh, one_shot, callback)
-		local a={}
-		a.first_fr=first_fr
-		a.fr_cant=fr_cant
-		a.speed=speed
-		a.w=zoomw
-        a.h=zoomh
-        a.callback=callback or function()end
-        a.one_shot=one_shot or false
-		
-		add(a.list, a)
+		local an={
+            first_fr=first_fr,
+            fr_cant=fr_cant,
+            speed=speed,
+            w=zoomw,
+            h=zoomh,
+            callback=callback or function()end,
+            one_shot=one_shot or false,
+        }
+
+		add(a.list, an)
 	end
     
     -- this must be called in the _draw() function
@@ -90,24 +89,26 @@ function anim()
 end
 
 function entity(anim_obj)
-    local e={}
-    -- use setx(n) and sety(n) to set this values
-    e.x=0
-    e.y=0
-    ---------------------------------------------
-    e.anim_obj=anim_obj
+    local e={
+        -- use setx(n) and sety(n) to set this values
+        x=0,
+        y=0,
+        anim_obj=anim_obj,
+        debugbounds=false,
+        flipx=false,
+        flipy=false,
+        bounds=nil,
+    -- private
+        -- flickering---------\\
+        -- all private here...
+        flkr={
+            timer=0,
+            duration=0,     -- this value will be overwritten
+            slowness=3,
+            isflikrng=false -- change this flag to start flickering
+        }
+    }
 
-    e.debugbounds, e.flipx, e.flipy = false
-    e.bounds=nil
-
--- private    
-    -- flickering---------\\
-    -- all private here...
-    e.flkr={}
-    e.flkr.timer=0
-    e.flkr.duration=0          -- this value will be overwritten
-    e.flkr.slowness=3
-    e.flkr.isflikrng=false -- change this flag to start flickering
     function e.flkr:flicker()
         if e.timer > e.duration then
             e.timer=0
