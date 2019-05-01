@@ -31,15 +31,16 @@ end
 function anim()
     local a={
         list={},
-        current=false,
+        current=nil,
         tick=0,
     }
 -- private
     function a:_get_fr(one_shot, callback)
-		local anim=a.current
-		local aspeed,fq,st,step, new_step = anim.speed, anim.fr_cant, anim.first_fr, flr(a.tick)*anim.w, flr(flr(a.tick)*anim.w)
+        local anim=a.current
+        local aspeed,fq,st,step= anim.speed, anim.fr_cant, anim.first_fr, flr(a.tick)*anim.w
 
-		a.tick+=aspeed
+        a.tick+=aspeed
+        local new_step=flr(flr(a.tick)*anim.w)
 		if st+new_step >= st+(fq*anim.w) then
 		    if one_shot then
 		        a.tick-=aspeed
@@ -98,24 +99,25 @@ function entity(anim_obj)
         flipx=false,
         flipy=false,
         bounds=nil,
-    -- private
-        -- flickering---------\\
-        -- all private here...
-        flkr={
-            timer=0,
-            duration=0,     -- this value will be overwritten
-            slowness=3,
-            isflikrng=false -- change this flag to start flickering
-        }
     }
-
-    function e.flkr:flicker()
-        if e.timer > e.duration then
-            e.timer=0
-            e.isflikrng=false
+    -- private
+    -- flickering---------\\
+    -- all private here...
+    local flkr={
+        timer=0,
+        duration=0,     -- this value will be overwritten
+        slowness=3,
+        isflikrng=false -- change this flag to start flickering
+    }
+    e.flkr=flkr
+    function flkr:flicker()
+        if flkr.timer > flkr.duration then
+            flkr.timer=0
+            flkr.isflikrng=false
         else
-            e.timer+=1
+            flkr.timer+=1
         end
+        e.flkr=flkr
     end
     -- end flickering ----//
 
@@ -140,20 +142,20 @@ function entity(anim_obj)
         e:setpos(e.x, e.y)
     end
     function e:flicker(duration)
-        if not e.flickerer.isflikrng then
-            e.flickerer.duration=duration
-            e.flickerer.isflikrng=true
-            e.flickerer:flicker()
+        if not flkr.isflikrng then
+            flkr.duration=duration
+            flkr.isflikrng=true
+            flkr:flicker()
         end
-        return e.flickerer.isflikrng
+        return flkr.isflikrng
     end
 
     -- this must be called in the _draw() function
     function e:draw()
-        if e.flickerer.timer % e.flickerer.slowness == 0 then
+        if flkr.timer % flkr.slowness == 0 then
             e.anim_obj:draw(e.x,e.y,e.flipx,e.flipy)
         end
-        if(e.flickerer.isflikrng) e.flickerer:flicker()
+        if(flkr.isflikrng) flkr:flicker()
 		if(e.debugbounds) e.bounds:printbounds()
     end
 

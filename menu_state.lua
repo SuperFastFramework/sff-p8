@@ -1,6 +1,6 @@
 -- state
 function menu_state()
-    local state,texts,ypos={},{},111
+    local state,texts,ypos,frbkg,frfg={},{},111,1,6
 
 	add(texts, tutils({text="game title",centerx=true,y=8,fg=8,bg=0,bordered=true,shadowed=true,sh=2}))
 	add(texts, tutils({text="rombosaur studios",centerx=true,y=99,fg=9,sh=2,shadowed=true}))
@@ -13,16 +13,13 @@ function menu_state()
     add(texts, tutils({text="  z         x  ", centerx=true, bordered=true, y=ypos+3, fg=8, bg=0}))
     ypos+=10
 	add(texts, tutils({text="  remap  ", centerx=true, y=ypos, shadowed=true, fg=7, sh=0}))
-	
+
 	-- controls position
-	local x1=28 
-	local y1=128-19 
-	local x2=128-x1-2 
-	local y2=128 
+	local x1=28
+	local y1=128-19
+	local x2=128-x1-2
+	local y2=128
     -- -----------------
-    
-	-- graphical frame 
-	local frbkg,frfg=1,6
 
 	state.update=function()
         if(btnp(5)) curstate=game_state() -- "X"

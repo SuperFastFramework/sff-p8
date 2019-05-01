@@ -1,26 +1,16 @@
 -- state
 function win_state()
-    local s={}
-    local texts={}
-    local timeout=2 -- for avoiding the user hitting X while playing and by that dismissing this screen. In seconds
-
-    -- graphical frame 
-    local frbkg=11
-    local frfg=6
-
+    local s,texts,timeout,frbkg,frfg,ty,restart_msg,msg={},{},2,11,6,15,"press ❎ to restart"
+        ,tutils({text="", blink=true, on_time=15, centerx=true,y=110,fg=0,bg=1,bordered=false,shadowed=true,sh=7})
     music(-1)
     sfx(-1)
     
-    local ty=15
     add(texts, tutils({text="                         ",centerx=true,y=ty,fg=8,bg=0,bordered=true,shadowed=true,sh=2})) ty+=10
     add(texts, tutils({text="                         " ,centerx=true,y=ty,fg=8,bg=0,bordered=true,shadowed=true,sh=2}))ty+=10
     add(texts, tutils({text="                         ",centerx=true,y=ty,fg=8,bg=0,bordered=true,shadowed=true,sh=2})) ty+=10
     add(texts, tutils({text="                         ",centerx=true,y=ty,fg=8,bg=0,bordered=true,shadowed=true,sh=2})) ty+=10
     add(texts, tutils({text="                         ",centerx=true,y=ty,fg=8,bg=0,bordered=true,shadowed=true,sh=2})) ty+=20
     add(texts, tutils({text="                         ",centerx=true,y=ty,fg=8,bg=0,bordered=true,shadowed=true,sh=2})) ty+=10
-
-    local restart_msg = "press ❎ to restart"
-    local msg = tutils({text="", blink=true, on_time=15, centerx=true,y=110,fg=0,bg=1,bordered=false,shadowed=true,sh=7})
     add(texts, msg)
 
     s.update=function()

@@ -1,11 +1,9 @@
 -- prints 4 blocks in the entire screen that dances
 -- implements drawable interface
-local tick_dance=0
-local step_dance=0
+local tick_dance,step_dance=0,0
 
 function dance_bkg(delay,color)
-    local sp=delay
-    local pat=0b1110010110110101
+    local sp,pat=delay,0b1110010110110101
     tick_dance+=1
     if tick_dance>=sp then
         tick_dance=0
