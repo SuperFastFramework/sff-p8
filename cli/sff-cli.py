@@ -18,6 +18,7 @@
     Written by Iber Parodi Siri 2018
 '''
 import os, sys
+import shutil
 import argparse
 import tempfile, subprocess
 
@@ -103,7 +104,7 @@ def compile(path, name):
             print("No previous .p8 file. No assets imported")
 
     # moves the tmp.sff to the <name>.p8
-    os.rename(path+os.sep+TEMP_FILENAME, path+os.sep+out_p8)
+    shutil.move(path+os.sep+TEMP_FILENAME, path+os.sep+out_p8)
     print("Done!")
 
 def generate_state(path, name):
@@ -240,10 +241,10 @@ def generate_new_project(path, name):
     # Copy states
     for file in os.listdir(tmp_dir):
         if file.endswith(".lua"):
-            os.rename(os.path.join(tmp_dir, file), os.path.join(proj_name, file))
+            shutil.move(os.path.join(tmp_dir, file), os.path.join(proj_name, file))
     
     # Copy libs
-    os.rename(os.path.join(tmp_dir,"sff"), os.path.join(proj_name, "sff") )
+    shutil.move(os.path.join(tmp_dir,"sff"), os.path.join(proj_name, "sff") )
 
     print("New project generated at "+proj_name)
 
