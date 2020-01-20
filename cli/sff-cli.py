@@ -57,7 +57,7 @@ def compile(path, name):
             print("Importing code... ")
             while line:
                 # Check for file to inject keyword
-                if line.startswith(INJECT_KEYWORD): 
+                if line.startswith(INJECT_KEYWORD):
                     filename_to_inject = line.split(INJECT_KEYWORD, 1)[1].strip()
 
                     try:
@@ -83,7 +83,7 @@ def compile(path, name):
                     out_file.write(line.encode("utf-8"))
 
                 line = in_file.readline()
-            
+
 
         # Copy all assets (music, art, map, sfx) from the .p8 file into TEMP_FILENAME
         try:
@@ -130,7 +130,7 @@ function """+name+"""()
 end"""
     # Add correct extension to the output file name
     out_lua=_add_extension(name, '.lua')
-    
+
     print("Generating state...")
 
     # Check if file exists
@@ -242,7 +242,7 @@ def generate_new_project(path, name):
     for file in os.listdir(tmp_dir):
         if file.endswith(".lua"):
             shutil.move(os.path.join(tmp_dir, file), os.path.join(proj_name, file))
-    
+
     # Copy libs
     shutil.move(os.path.join(tmp_dir,"sff"), os.path.join(proj_name, "sff") )
 
@@ -283,4 +283,3 @@ if __name__ == '__main__':
         elif args.generate == "project":
             check_name_arg(args)
             generate_new_project(args.path, args.name)
-
